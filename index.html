@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="fireApp">
+
+<head>
+    <title>FireTalk</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+</head>
+
+<body ng-controller="fireController as $ctrl" ng-style="{'background-color': $ctrl.settings.bgcolor, 'color': $ctrl.settings.color}">
+    <h1>FireTalk</h1>
+    <input type="text" ng-model="$ctrl.settings.bgcolor" ng-change="$ctrl.settings.$save()">
+    <input type="text" ng-model="$ctrl.settings.color" ng-change="$ctrl.settings.$save()">
+    <ul>
+        <li ng-repeat="message in $ctrl.messagesArr">
+            <input type="text" ng-model="message.text" ng-change="$ctrl.messagesArr.$save(message)" maxlength="{{$ctrl.settings.maxlength}}">
+            <button ng-click="$ctrl.deleteMessage(message)">X</button>
+        </li>
+    </ul>
+    <form ng-submit="$ctrl.writeMessage($ctrl.currentMessage)">
+        <input type="text" ng-model="$ctrl.currentMessage" maxlength="{{$ctrl.settings.maxlength}}" required>
+        <input type="submit">
+    </form>
+    <pre>{{$ctrl.messagesObj | json}}</pre>
+    <script src="script.js"></script>
+</body>
+
+</html>
